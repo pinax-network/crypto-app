@@ -1,6 +1,6 @@
 
 import kv from "@vercel/kv"
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function ButtonCounter(props: { name: string }) {
   const counter = await kv.get<number>(`Button:name:${props.name}`) || 0;
@@ -14,7 +14,7 @@ export default function Button(props: { name: string }) {
     'use server';
 
     await kv.incr(`Button:name:${props.name}`);
-    revalidateTag(`Button:name:${props.name}`);
+    revalidatePath(`/`);
   }
 
   return (

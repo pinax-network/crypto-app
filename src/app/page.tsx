@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import kv from "@vercel/kv"
 import Button from './Button'
 import MyIP from './MyIp'
 
@@ -17,8 +16,8 @@ export default function Home() {
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/pinax.png"
           alt="Pinax Logo"
-          width={280}
-          height={37}
+          width={431}
+          height={240}
           priority
         />
       </div>
