@@ -30,7 +30,6 @@ export default function Home() {
         <Button name="I don't know" />
       </div>
 
-      {/* @ts-expect-error Server Component */}
       <MyIP />
     </main>
   )
