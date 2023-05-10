@@ -6,12 +6,18 @@ export function middleware(request: NextRequest) {
     console.log(request.geo);
     console.log(request.ip);
     const response = NextResponse.next();
-    if ( request.ip ) response.cookies.set('ip', request.ip);
-    if ( request.geo?.country ) response.cookies.set('geo', JSON.stringify(request.geo));
+    if ( request.ip ) {
+      response.headers.set('ip', request.ip);
+      response.cookies.set('ip', request.ip);
+    }
+    if ( request.geo?.country ) {
+      response.headers.set('country', request.geo.country);
+      response.cookies.set('country', request.geo.country);
+    }
     return response;
 }
 
-// See "Matching Paths" below to learn more
-export const config = {
-  matcher: '/',
-};
+// // See "Matching Paths" below to learn more
+// export const config = {
+//   matcher: '/',
+// };
