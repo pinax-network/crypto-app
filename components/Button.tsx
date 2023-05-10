@@ -1,17 +1,6 @@
-
-import kv from "@vercel/kv"
+import kv from "@vercel/kv";
+import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers"
-
-function ipFromCookies() {
-    const store = cookies();
-    return store.get('ip')?.value;
-}
-
-function countryFromCookies() {
-    const store = cookies();
-    return store.get('country')?.value;
-}
 
 export async function ButtonCounter(props: { name: string }) {
   const counter = await kv.get<number>(`Button:name:${props.name}`) || 0;
@@ -21,13 +10,14 @@ export async function ButtonCounter(props: { name: string }) {
 }
 
 export default function Button(props: { name: string }) {
+  const {name} = props;
   async function increment() {
     'use server';
+    const store = cookies();
+    const country = store.get('country')?.value;
+    const ip = store.get('ip')?.value;
 
-    const ip = ipFromCookies() ?? "unknown";
-    const country = countryFromCookies() ?? "";
-
-    await kv.incr(`Button:name:${props.name}`);
+    await kv.incr(`Button:name:${name}`);
     if ( country ) await kv.incr(`country:${country}`);
     if ( ip ) await kv.incr(`ip:${ip}`);
     revalidatePath(`/`);
@@ -37,7 +27,7 @@ export default function Button(props: { name: string }) {
     <form action={increment}>
         <button className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-400 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
             {/* @ts-expect-error Server Component */}
-            {props.name} <ButtonCounter name={props.name} />
+            {name} <ButtonCounter name={name} />
         </button>
     </form>
   )
