@@ -12,13 +12,14 @@ export async function ButtonCounter(props: { name: string }) {
 export default function Button(props: { name: string }) {
   async function increment() {
     'use server';
+
     await kv.incr(`Button:name:${props.name}`);
     revalidateTag(`Button:name:${props.name}`);
   }
 
   return (
     <form action={increment}>
-        <button className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
+        <button className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-400 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
             {/* @ts-expect-error Server Component */}
             {props.name} <ButtonCounter name={props.name} />
         </button>

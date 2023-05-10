@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import kv from "@vercel/kv"
 import Button from './Button'
+import MyIP from './MyIp'
 
 export default function Home() {
   return (
@@ -28,6 +29,8 @@ export default function Home() {
         <Button name="Nation" />
         <Button name="I don't know" />
       </div>
+
+      <MyIP />
     </main>
   )
 }
