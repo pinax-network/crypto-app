@@ -26,9 +26,10 @@ const i18n: I18n = {
 }
 
 export function generateMetadata({params}: { params: { locale: string } }) {
+  const locale = ["en", "zh", "ko"].includes(params.locale) ? params.locale : 'en';
   return {
-    title: i18n[params.locale].title,
-    description: i18n[params.locale].description,
+    title: i18n[locale].title,
+    description: i18n[locale].description,
   }
 }
 
@@ -39,8 +40,9 @@ export default function RootLayout({
   children: React.ReactNode,
   params: { locale: string },
 }) {
+  const locale = ["en", "zh", "ko"].includes(params.locale) ? params.locale : 'en';
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className={inter.className}>{children}</body>
     </html>
   )
