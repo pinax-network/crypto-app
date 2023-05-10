@@ -33,7 +33,7 @@ async function ipFromCloudflare() {
 }
 
 export default function MyIP({locale}: { locale: string }) {
-    const {data} = useSwr("ip", ipFromCloudflare);
+    const { data } = useSwr("ip", ipFromCloudflare);
     const ip = data?.ip ?? i18n[locale].unknown;
     const country = data?.loc ?? "";
     const provider = data?.provider ?? "";

@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "whats-my-team",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "latest",
+    "@vercel/kv": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "swr": "latest"
+  },
+  "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@vercel/kv": "latest",
     "autoprefixer": "latest",
     "next": "latest",
     "postcss": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "swr": "^2.1.5",
+    "swr": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

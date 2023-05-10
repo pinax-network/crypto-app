@@ -1,22 +1,38 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { match } from '@formatjs/intl-localematcher'
+import { i18n } from './i18n-config'
 
-export function middleware(req: NextRequest) {
-  const response = NextResponse.next();
-  const country = req.geo?.country?.toLowerCase() || 'us'
-  const ip = req.ip || '';
-  if ( ip ) {
-    response.headers.set('ip', ip);
-    response.cookies.set('ip', ip);
-  }
-  if ( country ) {
-    response.headers.set('country', country);
-    response.cookies.set('country', country);
-  }
-  return response;
+function getLocale( request: NextRequest ) {
+  const locale = request.headers.get('accept-language')?.split(',').map((l) => l.split(';')[0]);
+  return match(locale ?? [], i18n.locales as any, i18n.defaultLocale);
 }
 
-// See "Matching Paths" below to learn more
+export default async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+  const response = NextResponse.next();
+
+  // Add IP & Country to cookies
+  const country = request.geo?.country?.toLowerCase() || 'us'
+  const ip = request.ip || '';
+  response.cookies.set('ip', ip);
+  response.cookies.set('country', country);
+
+  // Check if there is any supported locale in the pathname
+  const pathnameIsMissingLocale = i18n.locales.every(
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  )
+
+  // Redirect if there is no locale
+  if (pathnameIsMissingLocale) {
+    const locale = getLocale(request)
+
+    // e.g. incoming request is /products
+    // The new URL is now /en-US/products
+    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url))
+  }
+}
+
 export const config = {
-  matcher: '/',
+  // Skip all paths that should not be internationalized
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 };
