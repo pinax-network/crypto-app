@@ -1,6 +1,17 @@
 
 import kv from "@vercel/kv"
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers"
+
+function ipFromCookies() {
+    const store = cookies();
+    return store.get('ip')?.value;
+}
+
+function countryFromCookies() {
+    const store = cookies();
+    return store.get('country')?.value;
+}
 
 export async function ButtonCounter(props: { name: string }) {
   const counter = await kv.get<number>(`Button:name:${props.name}`) || 0;
@@ -13,7 +24,12 @@ export default function Button(props: { name: string }) {
   async function increment() {
     'use server';
 
+    const ip = ipFromCookies() ?? "unknown";
+    const country = countryFromCookies() ?? "";
+
     await kv.incr(`Button:name:${props.name}`);
+    if ( country ) await kv.incr(`country:${country}`);
+    if ( ip ) await kv.incr(`ip:${ip}`);
     revalidatePath(`/`);
   }
 
