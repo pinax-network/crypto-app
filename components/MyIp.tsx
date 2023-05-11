@@ -1,4 +1,5 @@
 "use client";
+import { Locale } from "@/i18n-config";
 import useSwr from "swr"
 
 interface I18n {
@@ -32,7 +33,7 @@ async function ipFromCloudflare() {
     return {ip, loc, provider: "Cloudflare"};
 }
 
-export default function MyIP({locale}: { locale: string }) {
+export default function MyIP({ locale }: { locale: Locale }) {
     const { data } = useSwr("ip", ipFromCloudflare);
     const ip = data?.ip ?? i18n[locale].unknown;
     const country = data?.loc ?? "";

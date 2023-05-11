@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { match } from '@formatjs/intl-localematcher'
-import { i18n } from './i18n-config'
+import { locales, defaultLocale } from './i18n-config'
 
 function getLocale( request: NextRequest ) {
   const current = request.cookies.get('NEXT_LOCALE');
   if ( current ) return current.value;
   const locale = request.headers.get('accept-language')?.split(',').map((l) => l.split(';')[0]);
-  return match(locale ?? [], i18n.locales as any, i18n.defaultLocale);
+  return match(locale ?? [], locales as any, defaultLocale);
 }
 
 function setCookies( response: NextResponse, ip: string, country: string, locale: string ) {
@@ -24,7 +24,7 @@ export default async function middleware(request: NextRequest) {
   const ip = request.ip || '';
 
   // Check if there is any supported locale in the pathname
-  const pathnameLocale = i18n.locales.find(
+  const pathnameLocale = locales.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 

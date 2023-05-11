@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
-import '@/globals.css'
+import '@/app/globals.css'
+import { Locale, defaultLocale, locales } from '@/i18n-config'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,8 +26,8 @@ const i18n: I18n = {
   }
 }
 
-export function generateMetadata({params}: { params: { locale: string } }) {
-  const locale = ["en", "zh", "ko"].includes(params.locale) ? params.locale : 'en';
+export function generateMetadata({params}: { params: { locale: Locale } }) {
+  const locale = locales.includes(params.locale) ? params.locale : defaultLocale;
   return {
     title: i18n[locale].title,
     description: i18n[locale].description,
@@ -38,9 +39,9 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode,
-  params: { locale: string },
+  params: { locale: Locale },
 }) {
-  const locale = ["en", "zh", "ko"].includes(params.locale) ? params.locale : 'en';
+  const locale = locales.includes(params.locale) ? params.locale : defaultLocale;
   return (
     <html lang={locale}>
       <body className={inter.className}>{children}</body>
