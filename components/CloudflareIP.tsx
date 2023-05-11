@@ -12,9 +12,9 @@ async function ipFromCloudflare() {
 
 export default function CloudFlareIp() {
     const { data } = useSwr("ip", ipFromCloudflare);
-    if ( !data ) return <div>Cloudflare: ??</div>;
+    if ( !data ) return <span>Cloudflare: ??</span>;
     const { country, ip } = data;
     return (
-        <div>Cloudflare: {ip} {country}</div>
+        <span>Cloudflare: {ip} {country}</span>
     )
 }

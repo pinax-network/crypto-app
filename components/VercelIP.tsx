@@ -4,8 +4,8 @@ export default function VercelIP() {
     const store = cookies();
     const ip = store.get("ip")?.value;
     const country = store.get("country")?.value;
-    if ( !ip || !country ) return <div>Vercel: ??</div>;
+    if ( !ip || !country ) return <span>Vercel: ??</span>;
     return (
-        <div>Vercel: {ip} {country}</div>
+        <span>Vercel: {ip} {country}</span>
     )
 }
