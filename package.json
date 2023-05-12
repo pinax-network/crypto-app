@@ -13,8 +13,7 @@
     "@vercel/kv": "latest",
     "axios": "^1.4.0",
     "react": "latest",
-    "react-dom": "latest",
-    "swr": "latest"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
@@ -23,7 +22,7 @@
     "autoprefixer": "latest",
     "next": "latest",
     "postcss": "latest",
-    "swr": "latest",
+    "swr": "^2.1.5",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

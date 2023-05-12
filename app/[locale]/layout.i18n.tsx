@@ -7,15 +7,15 @@ interface I18n {
 
 export default {
   en: {
-    title: "What's my Team?",
-    description: "Select your team and find out who you are!",
+    title: "Crypto Prices",
+    description: "See the prices of different cryptocurrencies",
   },
   ko: {
-    title: "내 팀은 무엇입니까?",
-    description: "팀을 선택하고 누구인지 알아보세요!",
+    title: "암호화폐 가격",
+    description: "다양한 암호화폐의 가격 보기",
   },
   zh: {
-    title: "我的团队是什么？",
-    description: "选择您的团队并找出您是谁！",
+    title: "加密价格",
+    description: "查看不同加密货币的价格",
   }
 } as I18n;
