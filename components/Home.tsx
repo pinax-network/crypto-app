@@ -26,7 +26,7 @@ export default function Home( props: any ) {
       </div>
 
       <div className="cryptos">
-        {data.map((data: { name: string, current_price:string, image: string }) => {
+        {data.map((data: { name: string, current_price:number, image: string }) => {
           return (
             <main>
               <div className="image">
