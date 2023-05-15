@@ -22,7 +22,7 @@ export default function Home( props: any ) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="title">
-        <h1>Crypto Prices</h1>
+        <h1>{t[locale]["title"]}</h1>
       </div>
 
       
