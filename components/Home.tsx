@@ -17,7 +17,7 @@ export default function Home( props: any ) {
 
   console.log(props)
 
-  if(!data) return <></>;
+  if(!data) return <>request limit reached</>;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
