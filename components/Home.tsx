@@ -48,7 +48,6 @@ export default function Home( props: any ) {
         CAD
       </button>
 
-      <h1>hello</h1>
       <h1>{t[locale]["lang"]}</h1>
       <h1>{t[locale]["cryptos"]}</h1>
     </main>
