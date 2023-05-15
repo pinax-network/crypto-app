@@ -11,8 +11,8 @@ import useSWR from 'swr'
 export default function Home( props: any ) {
 
   const locale = props.locale
-  const [ currency, setCurrency] = useState("cad");
-  const [ currencyName, setCurrencyName] = useState("CAD$ ");
+  const [ currency, setCurrency] = useState("usd");
+  const [ currencyName, setCurrencyName] = useState("USD$ ");
   const { data, error, isLoading } = useSWR(currency, fetcher)
 
   console.log(props)
@@ -26,7 +26,7 @@ export default function Home( props: any ) {
       </div>
 
       <div className="cryptos">
-        {data.map((data: { name: string, current_price:string, image: string}) => {
+        {data.map((data: { name: string, current_price:string, image: string }) => {
           return (
             <main>
               <div className="image">
@@ -45,7 +45,7 @@ export default function Home( props: any ) {
       <button onClick={() => {setCurrency("cad");  setCurrencyName("CA$ ")}}>
         CAD
       </button>
-      
+
       <h1>hello</h1>
       <h1>{t[locale]["lang"]}</h1>
       <h1>{t[locale]["i-dont-know"]}</h1>
