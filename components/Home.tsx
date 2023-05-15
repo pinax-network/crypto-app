@@ -25,6 +25,7 @@ export default function Home( props: any ) {
         <h1>Crypto Prices</h1>
       </div>
 
+      
       <div className="cryptos">
         {data.map((data: { name: string, current_price:number, image: string }) => {
           return (
@@ -38,6 +39,7 @@ export default function Home( props: any ) {
           )})}
       </div>
 
+      <h1>{t[locale]["select-currency"]}</h1>
       <button onClick={() => {setCurrency("usd");  setCurrencyName("US$ ")}} >
         USD
       </button>
@@ -48,7 +50,7 @@ export default function Home( props: any ) {
 
       <h1>hello</h1>
       <h1>{t[locale]["lang"]}</h1>
-      <h1>{t[locale]["i-dont-know"]}</h1>
+      <h1>{t[locale]["cryptos"]}</h1>
     </main>
   )
 }
