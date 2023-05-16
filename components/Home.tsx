@@ -6,6 +6,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from 'react';
 import useSWR from 'swr'
+import { Card, Text, Metric, Grid, Col, List, ListItem, Title , Dropdown, DropdownItem} from "@tremor/react"
+import { CubeIcon, CubeTransparentIcon } from "@heroicons/react/solid";
+
 
 
 export default function Home( props: any ) {
@@ -15,31 +18,47 @@ export default function Home( props: any ) {
   const [ currencyName, setCurrencyName] = useState("USD$ ");
   const { data, error, isLoading } = useSWR(currency, fetcher)
 
-  console.log(props)
+  // function manyFunc(currency: string){
+  //   switch(currency){
+  //     case 'USD':
+  //       setCurrency("usd")
+  //       setCurrencyName("US$ ")
+  //     case 'CAD':
+  //       setCurrency("cad")
+  //       setCurrencyName("CA$ ")
+  //     case 'EURO':
+  //       setCurrency("EU")
+  //       setCurrencyName("€ ")
+  //   }
+  // }
 
   if(!data) return <>{t[locale]["request-limit"]}</>;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="title">
-        <h1>{t[locale]["title"]}</h1>
-      </div>
-
-      
-      <div className="cryptos">
-        {data.map((data: { name: string, current_price:number, image: string }) => {
-          return (
-            <main>
-              <div className="image">
-                <img src={data.image} alt="" />
-              </div>
-              <h1>{data.name}</h1>
-              <h1>{currencyName}{data.current_price}</h1>
-            </main>
-          )})}
-      </div>
-
-      <h1>{t[locale]["select-currency"]}</h1>
+    <Card className="max-w-xs">
+      <Title>{t[locale]["title"]}</Title>
+      <List>
+      {data.map((data: { name: string, current_price:number, image: string }) => (
+        <ListItem key={data.name}>
+          <span>
+          <img style={{ width: 20, height: 20 }}src={data.image} alt="" />
+          </span>
+          <span>{data.name}</span>
+          <span>{currencyName}{data.current_price}</span>
+        </ListItem>
+      ))}
+      </List>
+    </Card>
+    <Card className="max-w-xs">
+      <Text>{t[locale]["select-currency"]}</Text>
+      <Dropdown onValueChange={(value) => {setCurrency(value); setCurrencyName(value)}}>
+        <DropdownItem value="USD" text={"USD"} />
+        <DropdownItem value="CAD" text={"CAD"} />
+        <DropdownItem value="EUR" text={"EURO"} />
+      </Dropdown>
+    </Card>
+      <div className="cryptos"></div>
       <button onClick={() => {setCurrency("usd");  setCurrencyName("US$ ")}} >
         USD
       </button>

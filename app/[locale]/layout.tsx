@@ -34,5 +34,6 @@ export default function RootLayout({
     <html lang={locale}>
       <body className={inter.className}>{children}</body>
     </html>
+    
   )
 }

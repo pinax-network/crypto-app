@@ -7,5 +7,6 @@ export default function Page({params}: { params: { locale: Locale } }) {
   return (
     
     <Home locale={locale} />
+    
   )
 }
