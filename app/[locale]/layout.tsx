@@ -16,7 +16,7 @@ export function generateMetadata({params}: { params: { locale: Locale } }) {
       title: t[locale].title,
       description: t[locale].description,
       images: [
-        "/team-building.png"
+        "/crypto.png"
       ]
     }
   }

@@ -2,7 +2,7 @@
 import t from './Home.i18n'
 import React, { useState } from 'react';
 import useSWR from 'swr'
-import { Card, Text, List, ListItem, Title , Dropdown, DropdownItem} from "@tremor/react"
+import { Card, Text, List, ListItem, Title , Dropdown, DropdownItem, Grid, Col, } from "@tremor/react"
 
 export default function Home( props: any ) {
   
@@ -28,35 +28,43 @@ export default function Home( props: any ) {
     }
   }
 
-  if(!data) return <>{t[locale]["request-limit"]}</>;
+  if(!data) return (
+  <main className="bg-slate-200">
+  {t[locale]["request-limit"]}
+  </main>);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="bg-slate-200 h-screen w-full pt-20">
+    <Grid numCols={1} numColsSm={3} numColsLg={1} className="gap-2">
+      <Card className="max-w-xl h-96">
+        <Title>{t[locale]["title"]}</Title>
+        <List>
+        {data.map((data: { name: string, current_price:number, image: string }) => (
+          <ListItem key={data.name}>
+            <span>
+            <img style={{ width: 20, height: 20 }}src={data.image} alt="" />
+            </span>
+            <span>{data.name}</span>
+            <span>{currencyDisplay}{data.current_price}</span>
+          </ListItem>
+        ))}
+        </List>
+      </Card>
 
-    <Card className="max-w-xs">
-      <Title>{t[locale]["title"]}</Title>
-      <List>
-      {data.map((data: { name: string, current_price:number, image: string }) => (
-        <ListItem key={data.name}>
-          <span>
-          <img style={{ width: 20, height: 20 }}src={data.image} alt="" />
-          </span>
-          <span>{data.name}</span>
-          <span>{currencyDisplay}{data.current_price}</span>
-        </ListItem>
-      ))}
-      </List>
-    </Card>
+      <Card className="max-w-xl">
+        <Text>{t[locale]["select-currency"]}</Text>
+        <Dropdown onValueChange={(value) => {setCurrency(value);}}>
+          <DropdownItem value="USD" text={"USD"} />
+          <DropdownItem value="CAD" text={"CAD"} />
+          <DropdownItem value="EUR" text={"EURO"} />
+        </Dropdown>
+      </Card>
+      <Card className="max-w-xl">
+        <Text>{t[locale]["lang"]}</Text>
+        <Text>{t[locale]["cryptos"]}</Text>
+      </Card>
+    </Grid>
 
-    <Card className="max-w-xs">
-      <Text>{t[locale]["select-currency"]}</Text>
-      <Dropdown onValueChange={(value) => {setCurrency(value);}}>
-        <DropdownItem value="USD" text={"USD"} />
-        <DropdownItem value="CAD" text={"CAD"} />
-        <DropdownItem value="EUR" text={"EURO"} />
-      </Dropdown>
-    </Card>
-      <h1>{t[locale]["lang"]}</h1>
-      <h1>{t[locale]["cryptos"]}</h1>
+   
     </main>
   )
 }
