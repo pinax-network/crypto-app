@@ -4,38 +4,42 @@ import { Locale } from '@/i18n-config'
 import t from './Home.i18n'
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import useSWR from 'swr'
 import { Card, Text, Metric, Grid, Col, List, ListItem, Title , Dropdown, DropdownItem} from "@tremor/react"
 import { CubeIcon, CubeTransparentIcon } from "@heroicons/react/solid";
 
 
-
 export default function Home( props: any ) {
-
+  
   const locale = props.locale
   const [ currency, setCurrency] = useState("usd");
-  const [ currencyName, setCurrencyName] = useState("USD$ ");
-  const { data, error, isLoading } = useSWR(currency, fetcher)
+  const [ currencyName, setCurrencyName] = useState("US$ ");
 
-  // function manyFunc(currency: string){
-  //   switch(currency){
-  //     case 'USD':
-  //       setCurrency("usd")
-  //       setCurrencyName("US$ ")
-  //     case 'CAD':
-  //       setCurrency("cad")
-  //       setCurrencyName("CA$ ")
-  //     case 'EURO':
-  //       setCurrency("EU")
-  //       setCurrencyName("€ ")
-  //   }
-  // }
+  function setBoth(currency: string) {
+    switch (currency) {
+      case "USD":
+        setCurrency("usd")
+        setCurrencyName("US$ ")
+        break;
+      case "CAD":
+        setCurrency("cad")
+        setCurrencyName("CA$ ")
+        break;
+      case "EUR":
+        setCurrency("eur")
+        setCurrencyName("€ ")
+        break;
+    }
+  }
+
+  const { data, error, isLoading } = useSWR(currency, fetcher)
 
   if(!data) return <>{t[locale]["request-limit"]}</>;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+
     <Card className="max-w-xs">
       <Title>{t[locale]["title"]}</Title>
       <List>
@@ -50,22 +54,23 @@ export default function Home( props: any ) {
       ))}
       </List>
     </Card>
+
     <Card className="max-w-xs">
       <Text>{t[locale]["select-currency"]}</Text>
-      <Dropdown onValueChange={(value) => {setCurrency(value); setCurrencyName(value)}}>
+      <Dropdown onValueChange={(value) => {setBoth(value);}}>
         <DropdownItem value="USD" text={"USD"} />
         <DropdownItem value="CAD" text={"CAD"} />
         <DropdownItem value="EUR" text={"EURO"} />
       </Dropdown>
     </Card>
       <div className="cryptos"></div>
-      <button onClick={() => {setCurrency("usd");  setCurrencyName("US$ ")}} >
+      {/* <button onClick={() => {setCurrency("usd");  setCurrencyName("US$ ")}} >
         USD
       </button>
 
       <button onClick={() => {setCurrency("cad");  setCurrencyName("CA$ ")}}>
         CAD
-      </button>
+      </button> */}
 
       <h1>{t[locale]["lang"]}</h1>
       <h1>{t[locale]["cryptos"]}</h1>
@@ -78,5 +83,4 @@ export async function fetcher(currency: string) {
   const data = await response.json()
 
   return data
-  
 }
