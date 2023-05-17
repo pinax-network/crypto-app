@@ -13,27 +13,27 @@ import { CubeIcon, CubeTransparentIcon } from "@heroicons/react/solid";
 export default function Home( props: any ) {
   
   const locale = props.locale
-  const [ currency, setCurrency] = useState("usd");
-  const [ currencyName, setCurrencyName] = useState("US$ ");
+  const [ currencyHeader, setCurrencyHeader] = useState("usd");
+  const [ currencyDisplay, setCurrencyDisplay] = useState("US$ ");
 
-  function setBoth(currency: string) {
+  function setCurrency(currency: string) {
     switch (currency) {
       case "USD":
         setCurrency("usd")
-        setCurrencyName("US$ ")
+        setCurrencyDisplay("US$ ")
         break;
       case "CAD":
         setCurrency("cad")
-        setCurrencyName("CA$ ")
+        setCurrencyDisplay("CA$ ")
         break;
       case "EUR":
         setCurrency("eur")
-        setCurrencyName("€ ")
+        setCurrencyDisplay("€ ")
         break;
     }
   }
 
-  const { data, error, isLoading } = useSWR(currency, fetcher)
+  const { data, error, isLoading } = useSWR(currencyHeader, fetcher)
 
   if(!data) return <>{t[locale]["request-limit"]}</>;
 
@@ -49,7 +49,7 @@ export default function Home( props: any ) {
           <img style={{ width: 20, height: 20 }}src={data.image} alt="" />
           </span>
           <span>{data.name}</span>
-          <span>{currencyName}{data.current_price}</span>
+          <span>{currencyDisplay}{data.current_price}</span>
         </ListItem>
       ))}
       </List>
@@ -57,7 +57,7 @@ export default function Home( props: any ) {
 
     <Card className="max-w-xs">
       <Text>{t[locale]["select-currency"]}</Text>
-      <Dropdown onValueChange={(value) => {setBoth(value);}}>
+      <Dropdown onValueChange={(value) => {setCurrency(value);}}>
         <DropdownItem value="USD" text={"USD"} />
         <DropdownItem value="CAD" text={"CAD"} />
         <DropdownItem value="EUR" text={"EURO"} />
