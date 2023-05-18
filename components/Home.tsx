@@ -33,9 +33,9 @@ export default function Home( props: any ) {
   {t[locale]["request-limit"]}
   </main>);
   return (
-    <main className="bg-slate-200 h-screen w-full pt-20">
+    <main>
     <Grid numCols={1} numColsSm={3} numColsLg={1} className="gap-2">
-      <Card className="max-w-xl h-96">
+      <Card>
         <Title>{t[locale]["title"]}</Title>
         <List>
         {data.map((data: { name: string, current_price:number, image: string }) => (
@@ -50,7 +50,7 @@ export default function Home( props: any ) {
         </List>
       </Card>
 
-      <Card className="max-w-xl">
+      <Card>
         <Text>{t[locale]["select-currency"]}</Text>
         <Dropdown onValueChange={(value) => {setCurrency(value);}}>
           <DropdownItem value="USD" text={"USD"} />
@@ -58,7 +58,7 @@ export default function Home( props: any ) {
           <DropdownItem value="EUR" text={"EURO"} />
         </Dropdown>
       </Card>
-      <Card className="max-w-xl">
+      <Card>
         <Text>{t[locale]["lang"]}</Text>
         <Text>{t[locale]["cryptos"]}</Text>
       </Card>
