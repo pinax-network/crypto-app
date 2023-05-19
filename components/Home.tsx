@@ -2,7 +2,8 @@
 import t from './Home.i18n'
 import React, { useState } from 'react';
 import useSWR from 'swr'
-import { Card, Text, List, ListItem, Title , Dropdown, DropdownItem, Grid, Col, } from "@tremor/react"
+import { Box, Flex, Link, Spacer, Text } from "@chakra-ui/react";
+import { Card, List, ListItem, Title , Dropdown, DropdownItem, Grid, Col, } from "@tremor/react"
 
 export default function Home( props: any ) {
   
@@ -30,8 +31,19 @@ export default function Home( props: any ) {
 
   if(!data) return (
   <main className="bg-slate-200">
-  {t[locale]["request-limit"]}
-  </main>);
+    {t[locale]["request-limit"]}
+    <Flex zIndex={200} background={"#536878"}>
+      <Box p='1'>
+        <Text color={"white"}>Start of footer</Text>
+      </Box>
+      <Spacer />
+      <Box p='2'>
+          <Text color={"white"}>End of footer</Text>
+      </Box>
+    </Flex>
+  </main>
+  );
+
   return (
     <main>
     <Grid numCols={1} numColsSm={3} numColsLg={1} className="gap-2">
@@ -64,6 +76,15 @@ export default function Home( props: any ) {
       </Card>
     </Grid>
 
+    <Flex zIndex={200} background={"#536878"}>
+      <Box p='1'>
+        <Text>Start of footer</Text>
+      </Box>
+      <Spacer />
+      <Box p='2'>
+          <Text>End of footer</Text>
+      </Box>
+    </Flex>
    
     </main>
   )
